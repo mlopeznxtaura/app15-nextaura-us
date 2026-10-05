@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Gooseman: Skyfall</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-BxwBa9Rz.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-C4nqRNbL.css">
+    <script type="module" crossorigin src="/assets/index-Bdm1aCdt.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BvL62oxC.css">
   </head>
   <body>
     <canvas id="game"></canvas>
@@ -18,7 +18,17 @@
         <div class="boss-bar"><div id="boss-fill"></div></div>
       </div>
       <div id="toast"></div>
-      <div class="hint">WASD move · Shift sprint · Space jump · Click / J sword · Z lock-on · Drag or Q/E orbit · M mute</div>
+      <div id="combat-tip" class="hidden">Jump over the shockwave · Strike the glowing core while it's stunned!</div>
+      <div class="controls" id="controls">
+        <div class="group"><span class="key-label">Move</span>
+          <span class="key" data-code="KeyW">W</span><span class="key" data-code="KeyA">A</span><span class="key" data-code="KeyS">S</span><span class="key" data-code="KeyD">D</span><span class="key-label sub">W / S on ladder = climb</span></div>
+        <div class="group"><span class="key-label">Attack</span><span class="key wide" data-code="KeyJ">J / CLICK</span></div>
+        <div class="group"><span class="key-label">Jump · Flap</span><span class="key wide" data-code="Space">SPACE</span><span class="key-label sub">hold = glide</span></div>
+        <div class="group"><span class="key-label">Run</span><span class="key" data-code="ShiftLeft">SHIFT</span><span class="key" data-code="KeyR" id="key-run">R = AUTO</span></div>
+        <div class="group"><span class="key-label">Lock-on</span><span class="key" data-code="KeyZ">Z</span></div>
+        <div class="group"><span class="key-label">Look</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
+        <div class="group"><span class="key-label">Sound</span><span class="key" data-code="KeyM">M</span></div>
+      </div>
     </div>
     <div id="title" class="overlay">
       <div class="logo">GOOSEMAN<span>SKYFALL</span></div>
