@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Gooseman: Skyfall</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-C5VA8zxB.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-Baj8b8FS.css">
+    <script type="module" crossorigin src="/assets/index-B_rz2xgV.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-9HTspAK9.css">
   </head>
   <body>
     <canvas id="game"></canvas>
     <div id="hud">
       <div id="hearts"></div>
       <div id="fuel" title="Jetpack fuel"><span>JET</span><div class="bar"><div id="fuel-fill"></div></div></div>
+      <div id="hack" class="hidden"><span id="hack-text">HOLD H TO HACK</span><div class="bar"><div id="hack-fill"></div></div></div>
+      <div id="pilot-banner">DRONE LINK · H to return</div>
       <div class="status" id="status">Relics 0 / 3</div>
       <div id="boss" class="hidden">
         <div class="boss-name" id="boss-name">Stone Warden</div>
@@ -27,6 +29,7 @@
         <div class="group"><span class="key-label">Jump · Fly</span><span class="key wide" data-code="Space">SPACE</span><span class="key-label sub">hold in air = jetpack</span><span class="key" data-code="KeyC">C</span><span class="key-label sub">descend</span></div>
         <div class="group"><span class="key-label">Run</span><span class="key" data-code="ShiftLeft">SHIFT</span><span class="key" data-code="KeyR" id="key-run">R</span><span class="key-label sub">R = auto-run, no keys needed</span></div>
         <div class="group"><span class="key-label">Lock-on</span><span class="key" data-code="KeyZ">Z</span></div>
+        <div class="group"><span class="key-label">Hack: Z then hold H · Fly drone: H</span><span class="key" data-code="KeyH">H</span></div>
         <div class="group"><span class="key-label">Look</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
         <div class="group"><span class="key-label">Sound</span><span class="key" data-code="KeyM">M</span></div>
       </div>
