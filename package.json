@@ -1,0 +1,11 @@
+{
+  "name": "app15-nextaura-us",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env staging"
+  },
+  "devDependencies": {
+    "wrangler": "^4.147.0"
+  }
+}

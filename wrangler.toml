@@ -1,0 +1,29 @@
+# Cloudflare Worker for app15.nextaura.us (Gooseman: Skyfall static SPA).
+# Deploy: env -u CF_API_TOKEN -u CLOUDFLARE_API_TOKEN npx wrangler deploy
+name = "nextaura-app15-us"
+main = "worker.js"
+compatibility_date = "2026-09-23"
+account_id = "683f127c03af82423467b6fad679252c"
+workers_dev = false
+preview_urls = false
+
+routes = [
+  { pattern = "app15.nextaura.us", custom_domain = true },
+  { pattern = "app15.nextaura.us/*", zone_name = "nextaura.us" },
+]
+
+[assets]
+directory = "."
+binding = "ASSETS"
+run_worker_first = true
+
+[env.staging]
+name = "nextaura-app15-us-staging"
+workers_dev = true
+preview_urls = false
+routes = []
+
+[env.staging.assets]
+directory = "."
+binding = "ASSETS"
+run_worker_first = true
