@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Gooseman: Skyfall</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-D_xR_Br2.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DSxcUrZY.css">
+    <script type="module" crossorigin src="/assets/game.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index.css">
   </head>
   <body>
     <canvas id="game"></canvas>
@@ -29,7 +29,7 @@
         <div class="group"><span class="key-label">Jump · Fly</span><span class="key wide" data-code="Space">SPACE</span><span class="key-label sub">hold in air = jetpack</span><span class="key" data-code="KeyC">C</span><span class="key-label sub">descend</span></div>
         <div class="group"><span class="key-label">Run</span><span class="key" data-code="ShiftLeft">SHIFT</span><span class="key" data-code="KeyR" id="key-run">R</span><span class="key-label sub">R = auto-run, no keys needed</span></div>
         <div class="group"><span class="key-label">Lock-on</span><span class="key" data-code="KeyZ">Z</span></div>
-        <div class="group"><span class="key-label">Hack: Z then hold H · Fly drone: H</span><span class="key" data-code="KeyH">H</span></div>
+        <div class="group"><span class="key-label">Hack drones &amp; robot animals: Z then hold H · Take control: H</span><span class="key" data-code="KeyH">H</span></div>
         <div class="group"><span class="key-label">Look</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
         <div class="group"><span class="key-label">Sound</span><span class="key" data-code="KeyM">M</span></div>
       </div>
@@ -40,6 +40,15 @@
         <div class="group"><span class="key-label">Boost</span><span class="key" data-code="ShiftLeft">SHIFT</span></div>
         <div class="group"><span class="key-label">Fire laser</span><span class="key wide fire" data-code="KeyJ">FIRE · J / CLICK</span><span class="key-label sub">hold = rapid fire</span></div>
         <div class="group"><span class="key-label">Aim</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
+        <div class="group"><span class="key-label">Back to goose</span><span class="key" data-code="KeyH">H</span></div>
+      </div>
+      <div class="controls beast-controls" id="beast-controls">
+        <div class="group"><span class="key-label">Move</span>
+          <span class="key" data-code="KeyW">W</span><span class="key" data-code="KeyA">A</span><span class="key" data-code="KeyS">S</span><span class="key" data-code="KeyD">D</span></div>
+        <div class="group"><span class="key-label">Jump</span><span class="key wide" data-code="Space">SPACE</span></div>
+        <div class="group"><span class="key-label">Sprint</span><span class="key" data-code="ShiftLeft">SHIFT</span></div>
+        <div class="group"><span class="key-label">Attack</span><span class="key wide fire" data-code="KeyJ">ATTACK · J / CLICK</span><span class="key-label sub">gorilla = ground pound · lion = roar · tiger = pounce</span></div>
+        <div class="group"><span class="key-label">Look</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
         <div class="group"><span class="key-label">Back to goose</span><span class="key" data-code="KeyH">H</span></div>
       </div>
     </div>
