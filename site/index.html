@@ -16,6 +16,7 @@
       <div id="pilot-banner">DRONE LINK · H to return</div>
       <div id="crosshair"></div>
       <div class="status" id="status">Relics 0 / 3</div>
+      <canvas id="minimap" width="200" height="200"></canvas>
       <div id="boss" class="hidden">
         <div class="boss-name" id="boss-name">Stone Warden</div>
         <div class="boss-bar"><div id="boss-fill"></div></div>
@@ -29,7 +30,7 @@
         <div class="group"><span class="key-label">Jump · Fly</span><span class="key wide" data-code="Space">SPACE</span><span class="key-label sub">hold in air = jetpack</span><span class="key" data-code="KeyC">C</span><span class="key-label sub">descend</span></div>
         <div class="group"><span class="key-label">Run</span><span class="key" data-code="ShiftLeft">SHIFT</span><span class="key" data-code="KeyR" id="key-run">R</span><span class="key-label sub">R = auto-run, no keys needed</span></div>
         <div class="group"><span class="key-label">Lock-on</span><span class="key" data-code="KeyZ">Z</span></div>
-        <div class="group"><span class="key-label">Hack drones &amp; robot animals: Z then hold H · Take control: H</span><span class="key" data-code="KeyH">H</span></div>
+        <div class="group"><span class="key-label">Hack drones &amp; robot animals: Z then hold H · Take control: H · Boats &amp; jet skis: walk up, hold H</span><span class="key" data-code="KeyH">H</span></div>
         <div class="group"><span class="key-label">Look</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
         <div class="group"><span class="key-label">Sound</span><span class="key" data-code="KeyM">M</span></div>
       </div>
@@ -41,6 +42,16 @@
         <div class="group"><span class="key-label">Fire laser</span><span class="key wide fire" data-code="KeyJ">FIRE · J / CLICK</span><span class="key-label sub">hold = rapid fire</span></div>
         <div class="group"><span class="key-label">Aim</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
         <div class="group"><span class="key-label">Back to goose</span><span class="key" data-code="KeyH">H</span></div>
+      </div>
+      <div class="controls drive-controls" id="drive-controls">
+        <div class="group"><span class="key-label">Throttle</span><span class="key" data-code="KeyW">W</span><span class="key-label">Reverse</span><span class="key" data-code="KeyS">S</span></div>
+        <div class="group"><span class="key-label">Steer</span><span class="key" data-code="KeyA">A</span><span class="key" data-code="KeyD">D</span></div>
+        <div class="group"><span class="key-label">Boost</span><span class="key" data-code="ShiftLeft">SHIFT</span></div>
+        <div class="group"><span class="key-label">Hop</span><span class="key wide" data-code="Space">SPACE</span></div>
+        <div class="group"><span class="key-label">Horn</span><span class="key" data-code="KeyG">G</span></div>
+        <div class="group"><span class="key-label">Map</span><span class="key" data-code="KeyN">N</span></div>
+        <div class="group"><span class="key-label">Look</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
+        <div class="group"><span class="key-label">Hop off</span><span class="key" data-code="KeyH">H</span></div>
       </div>
       <div class="controls beast-controls" id="beast-controls">
         <div class="group"><span class="key-label">Move</span>
