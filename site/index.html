@@ -5,15 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Gooseman: Skyfall</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-B12ktMXL.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BQQfQYYw.css">
+    <script type="module" crossorigin src="/assets/index-BxwBa9Rz.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C4nqRNbL.css">
   </head>
   <body>
     <canvas id="game"></canvas>
     <div id="hud">
-      <div class="title">GOOSEMAN // SKYFALL</div>
+      <div id="hearts"></div>
       <div class="status" id="status">Relics 0 / 3</div>
-      <div class="hint">WASD move · Shift sprint · Space jump · J / F sword · Drag or Q/E orbit · Scroll zoom</div>
+      <div id="boss" class="hidden">
+        <div class="boss-name" id="boss-name">Stone Warden</div>
+        <div class="boss-bar"><div id="boss-fill"></div></div>
+      </div>
+      <div id="toast"></div>
+      <div class="hint">WASD move · Shift sprint · Space jump · Click / J sword · Z lock-on · Drag or Q/E orbit · M mute</div>
+    </div>
+    <div id="title" class="overlay">
+      <div class="logo">GOOSEMAN<span>SKYFALL</span></div>
+      <p class="tag">Three relics. One stone warden. A very brave goose.</p>
+      <div class="buttons">
+        <button id="btn-continue" class="hidden">Continue</button>
+        <button id="btn-new">New Adventure</button>
+      </div>
+    </div>
+    <div id="gameover" class="overlay hidden">
+      <div class="logo small">You fainted…</div>
+      <div class="buttons"><button id="btn-retry">Try Again</button></div>
     </div>
   </body>
 </html>
