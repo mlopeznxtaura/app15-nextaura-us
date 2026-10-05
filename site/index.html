@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Gooseman: Skyfall</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-fzejrWgM.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-9HTspAK9.css">
+    <script type="module" crossorigin src="/assets/index-D_xR_Br2.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DSxcUrZY.css">
   </head>
   <body>
     <canvas id="game"></canvas>
@@ -14,6 +14,7 @@
       <div id="hearts"></div>
       <div id="hack" class="hidden"><span id="hack-text">HOLD H TO HACK</span><div class="bar"><div id="hack-fill"></div></div></div>
       <div id="pilot-banner">DRONE LINK · H to return</div>
+      <div id="crosshair"></div>
       <div class="status" id="status">Relics 0 / 3</div>
       <div id="boss" class="hidden">
         <div class="boss-name" id="boss-name">Stone Warden</div>
@@ -31,6 +32,15 @@
         <div class="group"><span class="key-label">Hack: Z then hold H · Fly drone: H</span><span class="key" data-code="KeyH">H</span></div>
         <div class="group"><span class="key-label">Look</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
         <div class="group"><span class="key-label">Sound</span><span class="key" data-code="KeyM">M</span></div>
+      </div>
+      <div class="controls drone-controls" id="drone-controls">
+        <div class="group"><span class="key-label">Fly drone</span>
+          <span class="key" data-code="KeyW">W</span><span class="key" data-code="KeyA">A</span><span class="key" data-code="KeyS">S</span><span class="key" data-code="KeyD">D</span></div>
+        <div class="group"><span class="key-label">Up</span><span class="key wide" data-code="Space">SPACE</span><span class="key-label">Down</span><span class="key" data-code="KeyC">C</span></div>
+        <div class="group"><span class="key-label">Boost</span><span class="key" data-code="ShiftLeft">SHIFT</span></div>
+        <div class="group"><span class="key-label">Fire laser</span><span class="key wide fire" data-code="KeyJ">FIRE · J / CLICK</span><span class="key-label sub">hold = rapid fire</span></div>
+        <div class="group"><span class="key-label">Aim</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
+        <div class="group"><span class="key-label">Back to goose</span><span class="key" data-code="KeyH">H</span></div>
       </div>
     </div>
     <div id="title" class="overlay">
