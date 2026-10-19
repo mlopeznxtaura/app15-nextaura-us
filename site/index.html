@@ -2,48 +2,67 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Gooseman: Skyfall</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/game.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Gooseman Sky Heights</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <style>
+      html, body { margin: 0; background: #bfe6ff; height: 100%; overflow: hidden; }
+      #loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+        background: radial-gradient(ellipse at center, rgba(20, 60, 110, 0.35), rgba(10, 25, 45, 0.75)); color: #fff;
+        font-family: "Trebuchet MS", system-ui, sans-serif; z-index: 30; }
+      #loading.hidden { display: none !important; }
+    </style>
+    <script type="module" crossorigin src="./assets/game.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index.css">
   </head>
   <body>
     <canvas id="game"></canvas>
+    <div id="hurt-flash"></div>
     <div id="hud">
       <div id="hearts"></div>
-      <div id="hack" class="hidden"><span id="hack-text">HOLD H TO HACK</span><div class="bar"><div id="hack-fill"></div></div></div>
-      <div id="pilot-banner">DRONE LINK · H to return</div>
+      <div id="hack" class="hidden"><span id="hack-text">HOLD HACK TO HACK</span><div class="bar"><div id="hack-fill"></div></div></div>
       <div id="crosshair"></div>
-      <div class="status" id="status">Relics 0 / 3</div>
+      <div class="status" id="status">Level 1 · Relics 0 / 3</div>
       <canvas id="minimap" width="200" height="200"></canvas>
-      <div id="boss" class="hidden">
-        <div class="boss-name" id="boss-name">Stone Warden</div>
-        <div class="boss-bar"><div id="boss-fill"></div></div>
+      <div id="hud-center">
+        <div id="boss" class="hidden">
+          <div class="boss-name" id="boss-name">Stone Warden</div>
+          <div class="boss-bar"><div id="boss-fill"></div></div>
+          <div class="boss-bar stagger hidden" id="stagger-bar"><div id="stagger-fill"></div></div>
+        </div>
+        <div id="toast"></div>
+        <div id="level-banner">Level 2: Belize City unlocked</div>
+        <div id="combat-tip" class="hidden">Jump over the shockwave · Strike the glowing core while it's stunned!</div>
+        <div id="pilot-banner">DRONE LINK · HACK to return</div>
       </div>
-      <div id="toast"></div>
-      <div id="combat-tip" class="hidden">Jump over the shockwave · Strike the glowing core while it's stunned!</div>
-      <div class="controls" id="controls">
+      <div class="controls kb-legend" id="controls">
         <div class="group"><span class="key-label">Move</span>
           <span class="key" data-code="KeyW">W</span><span class="key" data-code="KeyA">A</span><span class="key" data-code="KeyS">S</span><span class="key" data-code="KeyD">D</span><span class="key-label sub">W / S on ladder = climb</span></div>
         <div class="group"><span class="key-label">Attack</span><span class="key wide" data-code="KeyJ">J / CLICK</span></div>
         <div class="group"><span class="key-label">Jump · Fly</span><span class="key wide" data-code="Space">SPACE</span><span class="key-label sub">hold in air = jetpack</span><span class="key" data-code="KeyC">C</span><span class="key-label sub">descend</span></div>
-        <div class="group"><span class="key-label">Run</span><span class="key" data-code="ShiftLeft">SHIFT</span><span class="key" data-code="KeyR" id="key-run">R</span><span class="key-label sub">R = auto-run, no keys needed</span></div>
+        <div class="group"><span class="key-label">Glide</span><span class="key" data-code="KeyG">G</span><span class="key-label sub">hold in air · drag up/down = pitch · S = air-brake</span></div>
+        <div class="group"><span class="key-label">Run</span><span class="key" data-code="ShiftLeft">SHIFT</span><span class="key" data-code="KeyR" id="key-run">R</span><span class="key-label sub">R = auto-run</span></div>
         <div class="group"><span class="key-label">Lock-on</span><span class="key" data-code="KeyZ">Z</span></div>
+        <div class="group"><span class="key-label">Pause attacks (you + followers)</span><span class="key" data-code="KeyT">T</span></div>
         <div class="group"><span class="key-label">Hack drones &amp; robot animals: Z then hold H · Take control: H · Boats &amp; jet skis: walk up, hold H</span><span class="key" data-code="KeyH">H</span></div>
         <div class="group"><span class="key-label">Look</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
         <div class="group"><span class="key-label">Sound</span><span class="key" data-code="KeyM">M</span></div>
+        <div class="group"><span class="key-label">Pause</span><span class="key" data-code="Escape">ESC</span></div>
       </div>
-      <div class="controls drone-controls" id="drone-controls">
+      <div class="controls drone-controls kb-legend" id="drone-controls">
         <div class="group"><span class="key-label">Fly drone</span>
           <span class="key" data-code="KeyW">W</span><span class="key" data-code="KeyA">A</span><span class="key" data-code="KeyS">S</span><span class="key" data-code="KeyD">D</span></div>
         <div class="group"><span class="key-label">Up</span><span class="key wide" data-code="Space">SPACE</span><span class="key-label">Down</span><span class="key" data-code="KeyC">C</span></div>
         <div class="group"><span class="key-label">Boost</span><span class="key" data-code="ShiftLeft">SHIFT</span></div>
         <div class="group"><span class="key-label">Fire laser</span><span class="key wide fire" data-code="KeyJ">FIRE · J / CLICK</span><span class="key-label sub">hold = rapid fire</span></div>
+        <div class="group"><span class="key-label">Pause attacks (you + followers)</span><span class="key" data-code="KeyT">T</span></div>
         <div class="group"><span class="key-label">Aim</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
         <div class="group"><span class="key-label">Back to goose</span><span class="key" data-code="KeyH">H</span></div>
       </div>
-      <div class="controls drive-controls" id="drive-controls">
+      <div class="controls drive-controls kb-legend" id="drive-controls">
         <div class="group"><span class="key-label">Throttle</span><span class="key" data-code="KeyW">W</span><span class="key-label">Reverse</span><span class="key" data-code="KeyS">S</span></div>
         <div class="group"><span class="key-label">Steer</span><span class="key" data-code="KeyA">A</span><span class="key" data-code="KeyD">D</span></div>
         <div class="group"><span class="key-label">Boost</span><span class="key" data-code="ShiftLeft">SHIFT</span></div>
@@ -53,27 +72,232 @@
         <div class="group"><span class="key-label">Look</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
         <div class="group"><span class="key-label">Hop off</span><span class="key" data-code="KeyH">H</span></div>
       </div>
-      <div class="controls beast-controls" id="beast-controls">
+      <div class="controls beast-controls kb-legend" id="beast-controls">
         <div class="group"><span class="key-label">Move</span>
           <span class="key" data-code="KeyW">W</span><span class="key" data-code="KeyA">A</span><span class="key" data-code="KeyS">S</span><span class="key" data-code="KeyD">D</span></div>
         <div class="group"><span class="key-label">Jump</span><span class="key wide" data-code="Space">SPACE</span></div>
         <div class="group"><span class="key-label">Sprint</span><span class="key" data-code="ShiftLeft">SHIFT</span></div>
         <div class="group"><span class="key-label">Attack</span><span class="key wide fire" data-code="KeyJ">ATTACK · J / CLICK</span><span class="key-label sub">gorilla = ground pound · lion = roar · tiger = pounce</span></div>
+        <div class="group"><span class="key-label">Pause attacks (you + followers)</span><span class="key" data-code="KeyT">T</span></div>
         <div class="group"><span class="key-label">Look</span><span class="key" data-code="KeyQ">Q</span><span class="key" data-code="KeyE">E</span><span class="key-label sub">or drag</span></div>
         <div class="group"><span class="key-label">Back to goose</span><span class="key" data-code="KeyH">H</span></div>
       </div>
     </div>
-    <div id="title" class="overlay">
-      <div class="logo">GOOSEMAN<span>SKYFALL</span></div>
+
+    <div id="touch-overlay" class="hidden">
+      <div id="look-pad" aria-label="Look"></div>
+      <div id="stick" aria-label="Move">
+        <div class="stick-ring"><div id="stick-knob"></div></div>
+      </div>
+      <div id="touch-utils">
+        <button type="button" class="tb tb-sm" data-role="run">RUN</button>
+        <button type="button" class="tb tb-sm" data-role="descend">DOWN</button>
+        <button type="button" class="tb tb-sm" data-role="map">MAP</button>
+        <button type="button" class="tb tb-sm" data-role="mute">SOUND</button>
+      </div>
+      <div id="touch-actions">
+        <button type="button" class="tb tb-lock" data-role="lock">LOCK</button>
+        <button type="button" class="tb tb-hack" data-role="hack">HACK</button>
+        <button type="button" class="tb tb-attack" data-role="attack">ATTACK</button>
+        <button type="button" class="tb tb-jump" data-role="jump">JUMP</button>
+        <button type="button" class="tb tb-glide" data-role="glide">GLIDE</button>
+      </div>
+      <button type="button" class="tb tb-holdfire hidden" data-role="holdfire">Pause attacks</button>
+      <button type="button" class="tb tb-sm tb-pause" data-role="pause">II</button>
+    </div>
+
+    <div id="ds-legend" class="ds-legend hidden">
+      <button type="button" id="ds-legend-dismiss" aria-label="Hide">Hide</button>
+      <div id="ds-legend-art"></div>
+    </div>
+
+    <div id="loading" class="overlay">
+      <div class="logo">GOOSEMAN<span>SKY HEIGHTS</span></div>
+      <p class="tag" id="load-text">Warming the isles…</p>
+      <div class="load-bar"><div id="load-fill"></div></div>
+    </div>
+    <div id="title" class="overlay hidden">
+      <div class="logo">GOOSEMAN<span>SKY HEIGHTS</span></div>
       <p class="tag">Three relics. One stone warden. A very brave goose.</p>
       <div class="buttons">
         <button id="btn-continue" class="hidden">Continue</button>
         <button id="btn-new">New Adventure</button>
+        <button id="btn-credits">Credits</button>
       </div>
+    </div>
+    <div id="pause" class="overlay hidden">
+      <div class="logo small">Paused</div>
+      <div class="pause-row">
+        <span class="pause-label">Graphics</span>
+        <div class="seg" id="gfx-seg">
+          <button type="button" data-gfx="low">Low</button>
+          <button type="button" data-gfx="medium">Medium</button>
+          <button type="button" data-gfx="high">High</button>
+        </div>
+      </div>
+      <div class="pause-row">
+        <span class="pause-label">Haptics</span>
+        <button type="button" id="btn-haptics">On</button>
+      </div>
+      <div class="pause-row">
+        <span class="pause-label">Touch controls</span>
+        <div class="seg" id="touch-seg">
+          <button type="button" data-touch="auto">Auto</button>
+          <button type="button" data-touch="on">Show</button>
+          <button type="button" data-touch="off">Hide</button>
+        </div>
+      </div>
+      <div class="pause-row">
+        <span class="pause-label">Tester: Level 2</span>
+        <button type="button" id="btn-level2">Locked</button>
+      </div>
+      <div class="pause-row">
+        <span class="pause-label">Tester: Level 3</span>
+        <button type="button" id="btn-level3">Unlock + go</button>
+      </div>
+      <div class="pause-row">
+        <span class="pause-label">Tester: Level 4</span>
+        <button type="button" id="btn-level4">Unlock + go</button>
+      </div>
+      <div id="ds-legend-pause" class="ds-legend ds-legend-pause hidden">
+        <div id="ds-legend-pause-art"></div>
+      </div>
+      <div class="buttons">
+        <button id="btn-resume">Resume</button>
+        <button id="btn-pause-credits">Credits</button>
+      </div>
+    </div>
+    <div id="credits" class="overlay hidden">
+      <div class="logo small">Credits</div>
+      <p class="credits-body" id="credits-body"></p>
+      <div class="buttons"><button id="btn-credits-back">Back</button></div>
     </div>
     <div id="gameover" class="overlay hidden">
       <div class="logo small">You fainted…</div>
       <div class="buttons"><button id="btn-retry">Try Again</button></div>
     </div>
+    <template id="ds-legend-template">
+      <svg class="ds-svg" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g class="ds-labels" fill="#fff" font-family="Trebuchet MS, Avenir Next, system-ui, sans-serif" font-weight="800">
+          <text x="8" y="28" font-size="13">Descend</text>
+          <text x="8" y="58" font-size="13">Lock</text>
+          <text x="8" y="118" font-size="13">Map</text>
+          <text x="8" y="168" font-size="13">Move</text>
+          <text x="8" y="228" font-size="13">Descend</text>
+          <text x="552" y="28" font-size="13" text-anchor="end">Pause attacks</text>
+          <text x="552" y="58" font-size="13" text-anchor="end">Run</text>
+          <text x="552" y="118" font-size="13" text-anchor="end">Pause</text>
+          <text x="552" y="152" font-size="13" text-anchor="end">Hack</text>
+          <text x="552" y="178" font-size="13" text-anchor="end">Attack</text>
+          <text x="552" y="204" font-size="13" text-anchor="end">Jump</text>
+          <text x="552" y="230" font-size="13" text-anchor="end">Attack</text>
+          <text x="552" y="268" font-size="13" text-anchor="end">Look</text>
+        </g>
+        <g stroke="rgba(255,255,255,0.38)" stroke-width="1.2" fill="none">
+          <path d="M86,24 L168,48"/>
+          <path d="M86,54 L176,78"/>
+          <path d="M86,114 L214,128"/>
+          <path d="M86,164 L200,176"/>
+          <path d="M86,224 L218,198"/>
+          <path d="M474,24 L392,48"/>
+          <path d="M474,54 L384,78"/>
+          <path d="M474,114 L346,128"/>
+          <path d="M474,148 L390,142"/>
+          <path d="M474,174 L406,162"/>
+          <path d="M474,200 L390,178"/>
+          <path d="M474,226 L374,162"/>
+          <path d="M474,264 L360,200"/>
+        </g>
+        <g transform="translate(148,36)">
+          <path d="M28,70 C18,18 70,8 92,14 L102,36 H162 L172,14 C194,8 246,18 236,70
+                   C268,88 278,150 258,198 C246,226 214,232 192,208 H150
+                   C146,208 142,214 142,222 C142,234 122,234 122,222
+                   C122,214 118,208 114,208 H72 C50,232 18,226 6,198
+                   C-14,150 -4,88 28,70 Z"
+                fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.92)" stroke-width="2.4"/>
+          <rect x="78" y="8" width="36" height="16" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.75)" stroke-width="1.5"/>
+          <rect x="150" y="8" width="36" height="16" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.75)" stroke-width="1.5"/>
+          <rect x="74" y="26" width="44" height="12" rx="3" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.3"/>
+          <rect x="146" y="26" width="44" height="12" rx="3" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.3"/>
+          <rect x="92" y="48" width="80" height="40" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.8)" stroke-width="1.6"/>
+          <rect x="104" y="58" width="14" height="8" rx="2" fill="rgba(255,255,255,0.35)"/>
+          <rect x="146" y="58" width="14" height="8" rx="2" fill="#ffd23f"/>
+          <circle cx="70" cy="140" r="20" fill="rgba(255,210,63,0.12)" stroke="#ffd23f" stroke-width="2"/>
+          <circle cx="70" cy="140" r="6" fill="rgba(255,210,63,0.7)"/>
+          <circle cx="194" cy="164" r="20" fill="rgba(159,250,255,0.1)" stroke="#9ffaff" stroke-width="2"/>
+          <circle cx="194" cy="164" r="6" fill="rgba(159,250,255,0.7)"/>
+          <g transform="translate(78,188)" fill="none" stroke="rgba(255,255,255,0.88)" stroke-width="3.2" stroke-linecap="round">
+            <path d="M0,-11 V11 M-11,0 H11"/>
+          </g>
+          <circle cx="212" cy="106" r="9" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.95)" stroke-width="1.7"/>
+          <circle cx="194" cy="124" r="9" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.95)" stroke-width="1.7"/>
+          <circle cx="230" cy="124" r="9" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.95)" stroke-width="1.7"/>
+          <circle cx="212" cy="142" r="9" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.95)" stroke-width="1.7"/>
+        </g>
+      </svg>
+    </template>
+    <template id="ds-edge-legend-template">
+      <svg class="ds-svg" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g class="ds-labels" fill="#fff" font-family="Trebuchet MS, Avenir Next, system-ui, sans-serif" font-weight="800">
+          <text x="8" y="28" font-size="13">Descend</text>
+          <text x="8" y="58" font-size="13">Lock</text>
+          <text x="8" y="118" font-size="13">Map</text>
+          <text x="8" y="168" font-size="13">Move</text>
+          <text x="8" y="228" font-size="13">Descend</text>
+          <text x="552" y="28" font-size="13" text-anchor="end">Pause attacks</text>
+          <text x="552" y="58" font-size="13" text-anchor="end">Run</text>
+          <text x="552" y="118" font-size="13" text-anchor="end">Pause</text>
+          <text x="552" y="152" font-size="13" text-anchor="end">Hack</text>
+          <text x="552" y="178" font-size="13" text-anchor="end">Attack</text>
+          <text x="552" y="204" font-size="13" text-anchor="end">Jump</text>
+          <text x="552" y="230" font-size="13" text-anchor="end">Attack</text>
+          <text x="552" y="268" font-size="13" text-anchor="end">Look</text>
+        </g>
+        <g stroke="rgba(255,255,255,0.38)" stroke-width="1.2" fill="none">
+          <path d="M86,24 L168,48"/>
+          <path d="M86,54 L176,78"/>
+          <path d="M86,114 L214,128"/>
+          <path d="M86,164 L200,176"/>
+          <path d="M86,224 L218,198"/>
+          <path d="M474,24 L392,48"/>
+          <path d="M474,54 L384,78"/>
+          <path d="M474,114 L346,128"/>
+          <path d="M474,148 L390,142"/>
+          <path d="M474,174 L406,162"/>
+          <path d="M474,200 L390,178"/>
+          <path d="M474,226 L374,162"/>
+          <path d="M474,264 L360,200"/>
+        </g>
+        <g transform="translate(148,36)">
+          <path d="M32,62 C22,16 68,4 94,12 L104,32 H160 L170,12 C196,4 242,16 232,62
+                   C270,78 282,148 260,200 C246,228 214,232 190,206 H152
+                   C148,206 144,214 144,222 C144,236 120,236 120,222
+                   C120,214 116,206 112,206 H74 C50,232 18,228 4,200
+                   C-18,148 -6,78 32,62 Z"
+                fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.92)" stroke-width="2.4"/>
+          <rect x="78" y="6" width="36" height="16" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.75)" stroke-width="1.5"/>
+          <rect x="150" y="6" width="36" height="16" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.75)" stroke-width="1.5"/>
+          <rect x="74" y="24" width="44" height="12" rx="2" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.3"/>
+          <rect x="146" y="24" width="44" height="12" rx="2" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.3"/>
+          <rect x="92" y="46" width="80" height="38" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.8)" stroke-width="1.6"/>
+          <rect x="118" y="86" width="28" height="6" rx="1" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"/>
+          <rect x="48" y="168" width="10" height="22" rx="2" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.3"/>
+          <rect x="206" y="188" width="10" height="22" rx="2" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.3"/>
+          <rect x="104" y="56" width="14" height="8" rx="2" fill="rgba(255,255,255,0.35)"/>
+          <rect x="146" y="56" width="14" height="8" rx="2" fill="#ffd23f"/>
+          <circle cx="70" cy="140" r="20" fill="rgba(255,210,63,0.12)" stroke="#ffd23f" stroke-width="2"/>
+          <circle cx="70" cy="140" r="6" fill="rgba(255,210,63,0.7)"/>
+          <circle cx="194" cy="164" r="20" fill="rgba(159,250,255,0.1)" stroke="#9ffaff" stroke-width="2"/>
+          <circle cx="194" cy="164" r="6" fill="rgba(159,250,255,0.7)"/>
+          <g transform="translate(78,188)" fill="none" stroke="rgba(255,255,255,0.88)" stroke-width="3.2" stroke-linecap="round">
+            <path d="M0,-11 V11 M-11,0 H11"/>
+          </g>
+          <circle cx="212" cy="106" r="9" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.95)" stroke-width="1.7"/>
+          <circle cx="194" cy="124" r="9" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.95)" stroke-width="1.7"/>
+          <circle cx="230" cy="124" r="9" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.95)" stroke-width="1.7"/>
+          <circle cx="212" cy="142" r="9" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.95)" stroke-width="1.7"/>
+        </g>
+      </svg>
+    </template>
   </body>
 </html>

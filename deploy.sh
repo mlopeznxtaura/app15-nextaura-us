@@ -5,10 +5,12 @@
 set -euo pipefail
 export PATH="$HOME/.local/node/node-v22.14.0-darwin-arm64/bin:$PATH"
 here="$(cd "$(dirname "$0")" && pwd)"
-game="$here/../gooseman-skyfall/game"
+game="$here/../gooseman-skyheights-iphone/game"
 
 (cd "$game" && npm run build)
 mkdir -p "$here/site/assets"
+mkdir -p "$here/site/models"
+cp "$game"/dist/models/*.glb "$here/site/models/"
 cp "$game"/dist/index.html "$game"/dist/favicon.svg "$here/site/"
 cp "$game"/dist/assets/* "$here/site/assets/"
 for old in "$here"/site/assets/index-*.js; do [ -e "$old" ] && cp "$game/dist/assets/game.js" "$old"; done
